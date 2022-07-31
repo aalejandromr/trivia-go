@@ -2,11 +2,11 @@
   <Loader v-if="store.loading"></Loader>
   <div
     v-else
-    class="grid grid-rows-6 grid-cols-1 text-gray-600 mx-auto w-11/12 md:w-8/12 lg:w-7/12 overflow-y-hidden custom-height"
+    class="grid grid-cols-1 text-gray-600 mx-auto w-11/12 md:w-8/12 lg:w-7/12 overflow-y-hidden custom-height"
   >
     <div class="row-span-2">
       <div
-        class="min-h-full items-center justify-between py-4 rounded-lg flex flex-col items-center"
+        class="min-h-full py-4 rounded-lg flex flex-col items-center"
       >
         <div class="flex my-4">
           <div
@@ -20,6 +20,7 @@
           ></div>
         </div>
         <div
+          id="title-wrapper"
           class="border-4 border-gray-400 p-3 w-full rounded-lg shadow-xl flex items-center justify-center md:p-5 mb-3"
         >
           <h1
@@ -33,15 +34,15 @@
       <div class="min-h-full flex flex-col justify-center">
         <div class="grid grid-cols-1 gap-4 md:gap-4 md:grid-cols-2">
           <Answer
-            v-for="answer in store.data.results[store.currentQuestion]
-              .shuffled_answers"
-            :key="answer"
-            :text="answer"
+            v-for="answer in [ store.data.results[store.currentQuestion].correct_answer, ...store.data.results[store.currentQuestion].incorrect_answers]"
+            :key="answer.key"
+            :text="answer.key"
+            :imgSrc="answer.img"
             :is-valid-answer="
-              answer == store.data.results[store.currentQuestion].correct_answer
+              answer.key == store.data.results[store.currentQuestion].correct_answer.key
             "
             :is-invalid-answer="
-              answer != store.data.results[store.currentQuestion].correct_answer
+              answer.key != store.data.results[store.currentQuestion].correct_answer.key
             "
             :show-answer="store.showAnswer"
             @check-answer="store.checkAnswer"
@@ -53,6 +54,7 @@
       <div class="min-h-full min-w-full flex items-center justify-center">
         <Transition name="grow-fade">
           <button
+            id="next-button"
             @click="store.getNextQuestion"
             class="px-12 py-4 bg-gray-600 text-white text-lg rounded-lg hover:bg-gray-700 transition w-full md:w-1/3"
             v-show="store.showAnswer"
@@ -77,7 +79,7 @@ export default {
   },
   data() {
     return {
-      store,
+      store
     };
   },
   created() {

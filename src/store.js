@@ -1,5 +1,4 @@
 import { reactive } from 'vue';
-import { shuffle } from './helpers';
 
 export const store = reactive({
   score: 0,
@@ -7,16 +6,16 @@ export const store = reactive({
   quizEnded: false,
   data: null,
   options: null,
-  loading: true,
+  loading: false,
   currentQuestion: 0,
-  step: 0,
+  step: 1,
   showAnswer: false,
   incrementScore() {
     this.score++;
   },
   restartQuiz() {
     this.score = 0;
-    this.step = 0;
+    this.step = 1;
     this.questionCount = 0;
     this.quizEnded = false;
     this.data = null;
@@ -26,28 +25,157 @@ export const store = reactive({
     this.questionCount = count;
   },
   getData() {
-    this.loading = true;
-    fetch(
-      `https://opentdb.com/api.php?category=${this.options.category}&amount=10`
-    )
-      .then((res) => res.json())
-      .then((res) => {
-        res.results.map((item) => {
-          item.shuffled_answers = shuffle([
-            item.correct_answer,
-            ...item.incorrect_answers,
-          ]);
-          delete item.incorrect_answers;
-        });
-        this.data = res;
-        this.currentQuestion = 0;
-        this.showAnswer = false;
-        this.questionCount = res.results.length;
-        this.loading = false;
-      });
+    this.data = {
+      results: [
+        {
+          question: '¿Donde nacio Jesus?',
+          correct_answer: {
+            key: '5',
+            img: 'image1.png'
+          },
+          incorrect_answers: [{
+            key: '1',
+            img: 'image1.png'
+          }, {
+            key: '2',
+            img: 'image1.png'
+          }, {
+            key: '3',
+            img: 'image1.png'
+          }, {
+            key: '4',
+            img: 'image1.png'
+          }]
+        },
+        {
+          question: '¿Que fue primero?',
+          correct_answer: {
+            key: '5',
+            img: 'image1.png'
+          },
+          incorrect_answers: [{
+            key: '1',
+            img: 'image1.png'
+          }, {
+            key: '2',
+            img: 'image1.png'
+          }, {
+            key: '3',
+            img: 'image1.png'
+          }, {
+            key: '4',
+            img: 'image1.png'
+          }]
+        },
+        {
+          question: '¿Como se llamaba el discipulo que bautizó a Jesús?',
+          correct_answer: {
+            key: '5',
+            img: 'image1.png'
+          },
+          incorrect_answers: [{
+            key: '1',
+            img: 'image1.png'
+          }, {
+            key: '2',
+            img: 'image1.png'
+          }, {
+            key: '3',
+            img: 'image1.png'
+          }, {
+            key: '4',
+            img: 'image1.png'
+          }]
+        },
+        {
+          question: '¿Que fue primero?',
+          correct_answer: {
+            key: '5',
+            img: 'image1.png'
+          },
+          incorrect_answers: [{
+            key: '1',
+            img: 'image1.png'
+          }, {
+            key: '2',
+            img: 'image1.png'
+          }, {
+            key: '3',
+            img: 'image1.png'
+          }, {
+            key: '4',
+            img: 'image1.png'
+          }]
+        },
+        {
+          question: '¿Cuantos discipulos formó Jesús?',
+          correct_answer: {
+            key: '5',
+            img: 'image1.png'
+          },
+          incorrect_answers: [{
+            key: '1',
+            img: 'image1.png'
+          }, {
+            key: '2',
+            img: 'image1.png'
+          }, {
+            key: '3',
+            img: 'image1.png'
+          }, {
+            key: '4',
+            img: 'image1.png'
+          }]
+        },
+        {
+          question: '¿Que fue despues?',
+          correct_answer: {
+            key: '5',
+            img: 'image1.png'
+          },
+          incorrect_answers: [{
+            key: '1',
+            img: 'image1.png'
+          }, {
+            key: '2',
+            img: 'image1.png'
+          }, {
+            key: '3',
+            img: 'image1.png'
+          }, {
+            key: '4',
+            img: 'image1.png'
+          }]
+        },
+        {
+          question: '¿Que fue primero?',
+          correct_answer: {
+            key: '5',
+            img: 'image1.png'
+          },
+          incorrect_answers: [{
+            key: '1',
+            img: 'image1.png'
+          }, {
+            key: '2',
+            img: 'image1.png'
+          }, {
+            key: '3',
+            img: 'image1.png'
+          }, {
+            key: '4',
+            img: 'image1.png'
+          }]
+        }
+    ]
+  };
+    this.currentQuestion = 0;
+    this.showAnswer = false;
+    this.questionCount = this.data.results.length;
+    this.loading = false;
   },
   checkAnswer(answer) {
-    if (this.data.results[this.currentQuestion].correct_answer == answer) {
+    if (this.data.results[this.currentQuestion].correct_answer.key == answer) {
       this.incrementScore();
       this.showAnswer = true;
       this.data.results[this.currentQuestion].guessedRight = true;

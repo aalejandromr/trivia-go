@@ -13,7 +13,7 @@ export default {
   <div
     class="text-gray-700 w/11-12 mx-auto flex flex-col items-center justify-center h-screen"
   >
-    <div class="pb-20 flex flex-col items-center">
+    <div id="title-wrapper" class="border-4 border-gray-400 p-3 w-full rounded-lg shadow-xl flex items-center justify-center md:p-5 mb-3 pb-20 flex flex-col items-center" width="200">
       <h1 class="mb-8 text-center text-lg font-medium">
         You got {{ store.score }} out of {{ store.questionCount }} questions
         right.

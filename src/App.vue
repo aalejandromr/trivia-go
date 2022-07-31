@@ -19,6 +19,10 @@ export default {
 </script>
 
 <template>
+  <audio autoplay loop>
+    <source src="/play-track.mp3" type="audio/mpeg">
+    Your browser does not support the audio tag.
+  </audio> 
   <div class="text-gray-700">
     <Options v-if="store.step == 0"></Options>
     <Quiz v-if="store.step == 1"></Quiz>

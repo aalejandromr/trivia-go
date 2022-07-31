@@ -6,6 +6,7 @@ export default {
     text: String,
     isValidAnswer: Boolean,
     isInvalidAnswer: Boolean,
+    imgSrc: String
   },
   data() {
     return {
@@ -16,6 +17,7 @@ export default {
 </script>
 
 <template>
+  <img @click="store.checkAnswer(text)" src='http://localhost:3000/image1.png' />
   <button
     class="w-full bg-gray-200 rounded-lg p-4 transition md:text-lg md:p-6"
     @click="store.checkAnswer(text)"
